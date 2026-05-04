@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}記事を編集{% else %}新規投稿{% endif %} - Django Blog
+{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">
+        {% if form.instance.pk %}記事を編集{% else %}新規記事を作成{% endif %}
+    </h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="space-y-6">
+            {% for field in form %}
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ field.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="flex items-center space-x-4 mt-8">
+            <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-200">
+                保存する
+            </button>
+            <a href="javascript:history.back()" class="text-gray-600 hover:underline">キャンセル</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
