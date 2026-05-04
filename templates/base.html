@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Django Blog{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <nav class="bg-white shadow-md p-4 mb-8">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'post_list' %}" class="text-2xl font-bold text-blue-600">My Blog</a>
+            <div class="space-x-4">
+                {% if user.is_authenticated %}
+                    <span class="text-gray-600">こんにちは、{{ user.username }}さん</span>
+                    <a href="{% url 'post_create' %}" class="text-gray-700 hover:text-blue-600">新規投稿</a>
+                    <form action="{% url 'logout' %}" method="post" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="text-gray-700 hover:text-blue-600">ログアウト</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-gray-700 hover:text-blue-600">ログイン</a>
+                    <a href="{% url 'signup' %}" class="text-gray-700 hover:text-blue-600">会員登録</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <main class="container mx-auto px-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="mt-12 py-6 text-center text-gray-500">
+        &copy; 2024 Django Blog App
+    </footer>
+</body>
+</html>

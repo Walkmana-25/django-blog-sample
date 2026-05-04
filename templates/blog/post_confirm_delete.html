@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}記事を削除 - Django Blog{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md border-t-4 border-red-600">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">記事の削除</h2>
+    <p class="text-gray-700 mb-6">
+        本当に「<strong>{{ object.title }}</strong>」を削除しますか？この操作は取り消せません。
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="flex items-center space-x-4">
+            <button type="submit" class="bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700 transition duration-200">
+                はい、削除します
+            </button>
+            <a href="{% url 'post_detail' object.pk %}" class="text-gray-600 hover:underline">キャンセル</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
